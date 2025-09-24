@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -22,23 +22,7 @@ export default function Explore() {
     'Historical Fiction', 'Contemporary', 'Paranormal', 'Other'
   ]
 
-  useEffect(() => {
-    loadStories()
-  }, [])
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      loadStories()
-    }, searchTerm ? 500 : 0)
-
-    return () => clearTimeout(timeoutId)
-  }, [searchTerm])
-
-  useEffect(() => {
-    loadStories()
-  }, [selectedGenre, sortBy])
-
-  const loadStories = async () => {
+  const loadStories = useCallback(async () => {
     try {
       setLoading(true)
 
@@ -65,7 +49,23 @@ export default function Explore() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [searchTerm, selectedGenre, sortBy])
+
+  useEffect(() => {
+    loadStories()
+  }, [loadStories])
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      loadStories()
+    }, searchTerm ? 500 : 0)
+
+    return () => clearTimeout(timeoutId)
+  }, [searchTerm, loadStories])
+
+  useEffect(() => {
+    loadStories()
+  }, [selectedGenre, sortBy, loadStories])
 
   const getTimeAgo = (date) => {
     const now = new Date()

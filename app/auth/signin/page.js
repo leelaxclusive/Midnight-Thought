@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { signIn, getSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -12,7 +12,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Mail, Lock, Loader2, Chrome, Facebook, MessageCircle } from "lucide-react";
 import Image from "next/image";
 
-export default function SignInPage() {
+function SignInContent() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const callbackUrl = searchParams.get("callbackUrl") || "/";
@@ -196,7 +196,7 @@ export default function SignInPage() {
 						</form>
 
 						<div className="text-center text-sm">
-							<span className="text-muted-foreground">Don't have an account? </span>
+							<span className="text-muted-foreground">Don&apos;t have an account? </span>
 							<Link href="/auth/signup" className="text-primary hover:underline">
 								Sign up
 							</Link>
@@ -216,5 +216,17 @@ export default function SignInPage() {
 				</p>
 			</div>
 		</div>
+	);
+}
+
+export default function SignInPage() {
+	return (
+		<Suspense fallback={
+			<div className="min-h-screen bg-background flex items-center justify-center">
+				<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+			</div>
+		}>
+			<SignInContent />
+		</Suspense>
 	);
 }

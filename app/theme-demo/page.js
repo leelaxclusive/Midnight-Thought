@@ -208,15 +208,15 @@ export default function ThemeDemo() {
                 </p>
 
                 <p>
-                  She had been searching for three days now, following a cryptic reference she'd found in her grandmother's journal. The old woman had been the most powerful mage in the kingdom before her mysterious disappearance twenty years ago.
+                  She had been searching for three days now, following a cryptic reference she&apos;d found in her grandmother&apos;s journal. The old woman had been the most powerful mage in the kingdom before her mysterious disappearance twenty years ago.
                 </p>
 
                 <blockquote className="border-l-4 border-primary pl-4 italic text-muted-foreground my-4">
-                  "When shadow meets light in the hour of need, the chosen one shall plant the seed of power that kingdoms are destined to reap."
+                  &quot;When shadow meets light in the hour of need, the chosen one shall plant the seed of power that kingdoms are destined to reap.&quot;
                 </blockquote>
 
                 <p>
-                  The words had haunted her dreams ever since she'd first read them. Tonight, under the cover of darkness, she had finally gathered the courage to breach the forbidden section of the library.
+                  The words had haunted her dreams ever since she&apos;d first read them. Tonight, under the cover of darkness, she had finally gathered the courage to breach the forbidden section of the library.
                 </p>
 
                 <h3>The Discovery</h3>

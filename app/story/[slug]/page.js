@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,20 +30,7 @@ export default function StoryDetails({ params }) {
 		getParams();
 	}, [params]);
 
-	useEffect(() => {
-		if (slug) {
-			loadStoryData(slug);
-		}
-	}, [slug]);
-
-	// Load user interaction status when session becomes available
-	useEffect(() => {
-		if (slug && session) {
-			loadUserInteractionStatus();
-		}
-	}, [slug, session]);
-
-	const loadStoryData = async (slug) => {
+	const loadStoryData = useCallback(async (slug) => {
 		try {
 			const response = await fetch(`/api/stories/${slug}`);
 
@@ -82,9 +69,9 @@ export default function StoryDetails({ params }) {
 			setStory(null);
 			setLoading(false);
 		}
-	};
+	}, []);
 
-	const loadUserInteractionStatus = async () => {
+	const loadUserInteractionStatus = useCallback(async () => {
 		try {
 			// Load like status
 			const likeResponse = await fetch(`/api/stories/${slug}/like`)
@@ -107,7 +94,20 @@ export default function StoryDetails({ params }) {
 		} catch (error) {
 			console.error('Error loading user interaction status:', error)
 		}
-	}
+	}, [slug]);
+
+	useEffect(() => {
+		if (slug) {
+			loadStoryData(slug);
+		}
+	}, [slug, loadStoryData]);
+
+	// Load user interaction status when session becomes available
+	useEffect(() => {
+		if (slug && session) {
+			loadUserInteractionStatus();
+		}
+	}, [slug, session, loadUserInteractionStatus]);
 
 	const handleLike = async () => {
 		try {
@@ -408,7 +408,7 @@ export default function StoryDetails({ params }) {
 											<BookOpen className="h-8 w-8 text-muted-foreground" />
 										</div>
 										<h3 className="font-medium text-foreground mb-2">No chapters yet</h3>
-										<p className="text-sm text-muted-foreground mb-4">This story hasn't been published yet.</p>
+										<p className="text-sm text-muted-foreground mb-4">This story hasn&apos;t been published yet.</p>
 										{session && story.author.username === session.user?.username && (
 											<Button asChild size="sm">
 												<Link href={`/write?story=${story.slug}`}>

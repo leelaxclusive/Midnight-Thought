@@ -28,7 +28,7 @@ export default function ContactPage() {
 								<MessageSquare className="h-6 w-6 text-primary" />
 								Join Our Discord Server
 							</CardTitle>
-							<CardDescription>Midnight Thought is Leela's passion project - built by a part-time erotic and romantic writer! The best way to reach me is through Discord where I hang out with fellow writers.</CardDescription>
+							<CardDescription>Midnight Thought is Leela&apos;s passion project - built by a part-time erotic and romantic writer! The best way to reach me is through Discord where I hang out with fellow writers.</CardDescription>
 						</CardHeader>
 						<CardContent className="space-y-6">
 							<div className="p-6 bg-primary/5 rounded-lg">

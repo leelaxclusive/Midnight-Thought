@@ -72,7 +72,7 @@ export default function StoryManagement() {
 
   useEffect(() => {
     filterStories()
-  }, [stories, searchQuery, statusFilter, visibilityFilter])
+  }, [stories, searchQuery, statusFilter, visibilityFilter, filterStories])
 
   const loadStories = async () => {
     try {

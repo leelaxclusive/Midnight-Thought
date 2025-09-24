@@ -3,7 +3,7 @@ import "./globals.css";
 import SessionProvider from "@/components/providers/SessionProvider";
 import { ThemeProvider } from "@/lib/theme-context";
 import AutoPublisher from "@/components/AutoPublisher";
-
+import { Suspense } from "react";
 const inter = Inter({
 	subsets: ["latin"],
 	variable: "--font-inter",
@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
 				<ThemeProvider>
 					<SessionProvider>
 						<AutoPublisher />
-						{children}
+						<Suspense>{children}</Suspense>
 					</SessionProvider>
 				</ThemeProvider>
 			</body>

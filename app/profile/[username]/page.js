@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -43,13 +43,7 @@ export default function AuthorProfile({ params }) {
     getParams()
   }, [params])
 
-  useEffect(() => {
-    if (username) {
-      loadAuthorData(username)
-    }
-  }, [username])
-
-  const loadAuthorData = async (username) => {
+  const loadAuthorData = useCallback(async (username) => {
     try {
       setLoading(true)
 
@@ -98,7 +92,13 @@ export default function AuthorProfile({ params }) {
       setStats({})
       setLoading(false)
     }
-  }
+  }, [session])
+
+  useEffect(() => {
+    if (username) {
+      loadAuthorData(username)
+    }
+  }, [username, loadAuthorData])
 
   const handleFollow = () => {
     setIsFollowing(!isFollowing)
@@ -161,7 +161,7 @@ export default function AuthorProfile({ params }) {
           <div className="text-center py-12">
             <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <h1 className="text-2xl font-bold mb-2">Author Not Found</h1>
-            <p className="text-muted-foreground mb-4">The author you're looking for doesn't exist.</p>
+            <p className="text-muted-foreground mb-4">The author you&apos;re looking for doesn&apos;t exist.</p>
             <Button asChild>
               <Link href="/explore">Discover Stories</Link>
             </Button>

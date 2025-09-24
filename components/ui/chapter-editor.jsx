@@ -26,7 +26,7 @@ import {
   Heading3,
   Link,
   Image,
-  Separator
+  Minus
 } from 'lucide-react'
 
 export function ChapterEditor({
@@ -183,7 +183,7 @@ export function ChapterEditor({
 
   const insertButtons = [
     { icon: Link, action: insertLink, tooltip: 'Insert Link' },
-    { icon: Separator, action: insertHorizontalRule, tooltip: 'Horizontal Rule' },
+    { icon: Minus, action: insertHorizontalRule, tooltip: 'Horizontal Rule' },
   ]
 
   const historyButtons = [

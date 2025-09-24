@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'next/navigation'
 import { StoryReader } from '@/components/ui/story-reader'
 import { Card, CardContent } from '@/components/ui/card'
@@ -15,13 +15,7 @@ export default function ChapterPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  useEffect(() => {
-    if (params.slug && params.chapterSlug) {
-      loadChapter()
-    }
-  }, [params.slug, params.chapterSlug])
-
-  const loadChapter = async () => {
+  const loadChapter = useCallback(async () => {
     try {
       setLoading(true)
       setError(null)
@@ -67,7 +61,13 @@ export default function ChapterPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [params.slug, params.chapterSlug])
+
+  useEffect(() => {
+    if (params.slug && params.chapterSlug) {
+      loadChapter()
+    }
+  }, [params.slug, params.chapterSlug, loadChapter])
 
   if (loading) {
     return (

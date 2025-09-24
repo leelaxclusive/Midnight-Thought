@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { createSanitizedHtml } from "@/lib/sanitize";
@@ -55,74 +55,7 @@ export default function ChapterDetails({ params }) {
 		getParams();
 	}, [params]);
 
-	useEffect(() => {
-		if (slug && chapterNumber) {
-			loadChapterData(slug, chapterNumber);
-		}
-	}, [slug, chapterNumber]);
-
-	// Load user interaction status when session becomes available
-	useEffect(() => {
-		if (slug && chapterNumber && session) {
-			loadUserInteractionStatus();
-		}
-	}, [slug, chapterNumber, session]);
-
-	// Start analytics tracking when chapter loads
-	useEffect(() => {
-		if (chapter && session) {
-			startReadingSession();
-		}
-	}, [chapter, session]);
-
-	// Track reading time and send updates
-	useEffect(() => {
-		if (!readingSession || !readingStartTime) return;
-
-		const interval = setInterval(() => {
-			const now = Date.now();
-			const timeSpent = Math.floor((now - readingStartTime) / 1000);
-			setTotalReadingTime(timeSpent);
-
-			// Send analytics update every 30 seconds
-			if (timeSpent > 0 && timeSpent % 30 === 0) {
-				updateReadingSession(timeSpent, readingProgress);
-			}
-		}, 1000);
-
-		return () => clearInterval(interval);
-	}, [readingSession, readingStartTime, readingProgress]);
-
-	// Send final analytics when user leaves
-	useEffect(() => {
-		const handleBeforeUnload = () => {
-			if (readingSession && totalReadingTime > 0) {
-				const completed = readingProgress >= 90; // Consider 90% as completed
-				updateReadingSession(totalReadingTime, readingProgress, completed);
-			}
-		};
-
-		window.addEventListener("beforeunload", handleBeforeUnload);
-		return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-	}, [readingSession, totalReadingTime, readingProgress]);
-
-	useEffect(() => {
-		const handleScroll = () => {
-			if (contentRef.current) {
-				const element = contentRef.current;
-				const scrolled = window.scrollY;
-				const rate = scrolled / (element.scrollHeight - window.innerHeight);
-				const progress = Math.min(Math.max(rate, 0), 1) * 100;
-				setReadingProgress(progress);
-				setShowBackToTop(scrolled > 500);
-			}
-		};
-
-		window.addEventListener("scroll", handleScroll);
-		return () => window.removeEventListener("scroll", handleScroll);
-	}, []);
-
-	const loadChapterData = async (storySlug, chapterNumber) => {
+	const loadChapterData = useCallback(async (storySlug, chapterNumber) => {
 		try {
 			const response = await fetch(`/api/stories/${storySlug}/chapters/${chapterNumber}`);
 
@@ -156,9 +89,9 @@ export default function ChapterDetails({ params }) {
 			console.error("Error loading chapter:", error);
 			setLoading(false);
 		}
-	};
+	}, []);
 
-	const loadUserInteractionStatus = async () => {
+	const loadUserInteractionStatus = useCallback(async () => {
 		try {
 			// Load like status for this chapter
 			const likeResponse = await fetch(`/api/stories/${slug}/chapters/${chapterNumber}/like`);
@@ -169,9 +102,9 @@ export default function ChapterDetails({ params }) {
 		} catch (error) {
 			console.error("Error loading user interaction status:", error);
 		}
-	};
+	}, [slug, chapterNumber]);
 
-	const startReadingSession = async () => {
+	const startReadingSession = useCallback(async () => {
 		if (!session || !chapter) return;
 
 		try {
@@ -206,9 +139,9 @@ export default function ChapterDetails({ params }) {
 		} catch (error) {
 			console.error("Error starting reading session:", error);
 		}
-	};
+	}, [session, chapter, slug, chapterNumber]);
 
-	const updateReadingSession = async (timeSpent, scrollProgress, completed = false) => {
+	const updateReadingSession = useCallback(async (timeSpent, scrollProgress, completed = false) => {
 		if (!readingSession || !session) return;
 
 		try {
@@ -239,7 +172,75 @@ export default function ChapterDetails({ params }) {
 		} catch (error) {
 			console.error("Error updating reading session:", error);
 		}
-	};
+	}, [readingSession, session, slug, chapterNumber]);
+
+	useEffect(() => {
+		if (slug && chapterNumber) {
+			loadChapterData(slug, chapterNumber);
+		}
+	}, [slug, chapterNumber, loadChapterData]);
+
+	// Load user interaction status when session becomes available
+	useEffect(() => {
+		if (slug && chapterNumber && session) {
+			loadUserInteractionStatus();
+		}
+	}, [slug, chapterNumber, session, loadUserInteractionStatus]);
+
+	// Start analytics tracking when chapter loads
+	useEffect(() => {
+		if (chapter && session) {
+			startReadingSession();
+		}
+	}, [chapter, session, startReadingSession]);
+
+	// Track reading time and send updates
+	useEffect(() => {
+		if (!readingSession || !readingStartTime) return;
+
+		const interval = setInterval(() => {
+			const now = Date.now();
+			const timeSpent = Math.floor((now - readingStartTime) / 1000);
+			setTotalReadingTime(timeSpent);
+
+			// Send analytics update every 30 seconds
+			if (timeSpent > 0 && timeSpent % 30 === 0) {
+				updateReadingSession(timeSpent, readingProgress);
+			}
+		}, 1000);
+
+		return () => clearInterval(interval);
+	}, [readingSession, readingStartTime, readingProgress, updateReadingSession]);
+
+	// Send final analytics when user leaves
+	useEffect(() => {
+		const handleBeforeUnload = () => {
+			if (readingSession && totalReadingTime > 0) {
+				const completed = readingProgress >= 90; // Consider 90% as completed
+				updateReadingSession(totalReadingTime, readingProgress, completed);
+			}
+		};
+
+		window.addEventListener("beforeunload", handleBeforeUnload);
+		return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+	}, [readingSession, totalReadingTime, readingProgress, updateReadingSession]);
+
+	useEffect(() => {
+		const handleScroll = () => {
+			if (contentRef.current) {
+				const element = contentRef.current;
+				const scrolled = window.scrollY;
+				const rate = scrolled / (element.scrollHeight - window.innerHeight);
+				const progress = Math.min(Math.max(rate, 0), 1) * 100;
+				setReadingProgress(progress);
+				setShowBackToTop(scrolled > 500);
+			}
+		};
+
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, []);
+
 
 	const handleLike = async () => {
 		try {
@@ -343,7 +344,7 @@ export default function ChapterDetails({ params }) {
 					<div className="text-center py-12">
 						<BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
 						<h1 className="text-2xl font-bold mb-2">Chapter Not Found</h1>
-						<p className="text-muted-foreground mb-4">The chapter you're looking for doesn't exist or has been removed.</p>
+						<p className="text-muted-foreground mb-4">The chapter you&apos;re looking for doesn&apos;t exist or has been removed.</p>
 						<Button asChild>
 							<Link href="/explore">Discover Other Stories</Link>
 						</Button>
@@ -462,7 +463,7 @@ export default function ChapterDetails({ params }) {
 						{chapter.notes && (
 							<Card className="mb-8">
 								<CardHeader>
-									<CardTitle className="text-lg">Author's Notes</CardTitle>
+									<CardTitle className="text-lg">Author&apos;s Notes</CardTitle>
 								</CardHeader>
 								<CardContent>
 									<p className="text-muted-foreground leading-relaxed">{chapter.notes}</p>

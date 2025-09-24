@@ -35,9 +35,9 @@ export default function AboutPage() {
 							</CardTitle>
 						</CardHeader>
 						<CardContent className="space-y-4 text-muted-foreground">
-							<p>Hi! I'm Leela, a passionate writer who loves crafting erotic and romantic stories. As someone deeply immersed in the world of intimate storytelling, I wanted to create a platform where writers like me could share their work freely and connect with readers who appreciate these genres.</p>
-							<p>This project was created with help from some amazing tech friends who brought my vision to life. What began as an idea has grown into something I'm genuinely passionate about. I believe every story deserves a home, especially the intimate, romantic tales that often struggle to find proper platforms.</p>
-							<p>Midnight Thought isn't backed by any company - it's just me, with lots of caffeine, and the dream of creating a welcoming space for storytellers who want to explore love, romance, and human connection through their words.</p>
+							<p>Hi! I&apos;m Leela, a passionate writer who loves crafting erotic and romantic stories. As someone deeply immersed in the world of intimate storytelling, I wanted to create a platform where writers like me could share their work freely and connect with readers who appreciate these genres.</p>
+							<p>This project was created with help from some amazing tech friends who brought my vision to life. What began as an idea has grown into something I&apos;m genuinely passionate about. I believe every story deserves a home, especially the intimate, romantic tales that often struggle to find proper platforms.</p>
+							<p>Midnight Thought isn&apos;t backed by any company - it&apos;s just me, with lots of caffeine, and the dream of creating a welcoming space for storytellers who want to explore love, romance, and human connection through their words.</p>
 						</CardContent>
 					</Card>
 
@@ -46,7 +46,7 @@ export default function AboutPage() {
 						<CardHeader>
 							<CardTitle className="flex items-center gap-2 text-2xl">
 								<PenTool className="h-6 w-6 text-primary" />
-								What I'm Building
+								What I&apos;m Building
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
@@ -75,7 +75,7 @@ export default function AboutPage() {
 						<CardHeader>
 							<CardTitle className="flex items-center gap-2 text-2xl">
 								<Code className="h-6 w-6 text-primary" />
-								How It's Built
+								How It&apos;s Built
 							</CardTitle>
 						</CardHeader>
 						<CardContent className="space-y-4 text-muted-foreground">
@@ -85,10 +85,10 @@ export default function AboutPage() {
 								<li>MongoDB for data storage</li>
 								<li>NextAuth.js for authentication</li>
 								<li>Tailwind CSS for styling</li>
-								<li>Built with tech friends' guidance and expertise</li>
+								<li>Built with tech friends&apos; guidance and expertise</li>
 								<li>Deployed with good vibes, caffeine, and determination ☕</li>
 							</ul>
-							<p>As a writer who had a vision, my tech friends have been incredible in bringing it to life! If you're a developer and want to contribute, please reach out on Discord!</p>
+							<p>As a writer who had a vision, my tech friends have been incredible in bringing it to life! If you&apos;re a developer and want to contribute, please reach out on Discord!</p>
 						</CardContent>
 					</Card>
 
@@ -102,7 +102,7 @@ export default function AboutPage() {
 						</CardHeader>
 						<CardContent className="space-y-6">
 							<div className="text-muted-foreground space-y-4">
-								<p>Midnight Thought is still growing, and I'd love your help to make it better:</p>
+								<p>Midnight Thought is still growing, and I&apos;d love your help to make it better:</p>
 								<ul className="list-disc list-inside space-y-2 ml-4">
 									<li>Write and share your stories</li>
 									<li>Read and support other writers</li>

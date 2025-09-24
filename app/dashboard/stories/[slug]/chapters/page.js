@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, use, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -44,13 +44,7 @@ export default function ChapterManagement({ params }) {
 		}
 	}, [status, router]);
 
-	useEffect(() => {
-		if (session && resolvedParams.slug) {
-			loadStoryAndChapters();
-		}
-	}, [session, resolvedParams.slug]);
-
-	const loadStoryAndChapters = async () => {
+	const loadStoryAndChapters = useCallback(async () => {
 		try {
 			setLoading(true);
 
@@ -72,7 +66,13 @@ export default function ChapterManagement({ params }) {
 		} finally {
 			setLoading(false);
 		}
-	};
+	}, [resolvedParams.slug]);
+
+	useEffect(() => {
+		if (session && resolvedParams.slug) {
+			loadStoryAndChapters();
+		}
+	}, [session, resolvedParams.slug, loadStoryAndChapters]);
 
 	const openCreateDialog = () => {
 		setChapterForm({
@@ -258,7 +258,7 @@ export default function ChapterManagement({ params }) {
 					<div className="text-center py-12">
 						<BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
 						<h1 className="text-2xl font-bold mb-2">Story Not Found</h1>
-						<p className="text-muted-foreground mb-4">The story you're looking for doesn't exist or you don't have access to it.</p>
+						<p className="text-muted-foreground mb-4">The story you&apos;re looking for doesn&apos;t exist or you don&apos;t have access to it.</p>
 						<Button asChild>
 							<Link href="/dashboard/stories">Back to Stories</Link>
 						</Button>
@@ -507,7 +507,7 @@ export default function ChapterManagement({ params }) {
 						<AlertDialogHeader>
 							<AlertDialogTitle>Delete Chapter</AlertDialogTitle>
 							<AlertDialogDescription>
-								Are you sure you want to delete "Chapter {chapterToDelete?.chapterNumber}: {chapterToDelete?.title}"? This action cannot be undone.
+								Are you sure you want to delete &quot;Chapter {chapterToDelete?.chapterNumber}: {chapterToDelete?.title}&quot;? This action cannot be undone.
 							</AlertDialogDescription>
 						</AlertDialogHeader>
 						<AlertDialogFooter>

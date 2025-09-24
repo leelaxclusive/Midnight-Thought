@@ -359,7 +359,7 @@ export default function Profile() {
                       required
                     />
                     <p className="text-xs text-muted-foreground">
-                      We'll use this to send you important updates about your account
+                      We&apos;ll use this to send you important updates about your account
                     </p>
                   </div>
 

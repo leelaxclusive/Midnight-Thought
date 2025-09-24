@@ -37,7 +37,7 @@ export default function AccessibilityPage() {
 							</CardTitle>
 						</CardHeader>
 						<CardContent className="text-muted-foreground space-y-4">
-							<p>Midnight Thought is built by Leela, a part-time erotic writer who believes storytelling should be accessible to everyone. While the platform is still improving its accessibility features, I'm committed to making it usable for people of all abilities.</p>
+							<p>Midnight Thought is built by Leela, a part-time erotic writer who believes storytelling should be accessible to everyone. While the platform is still improving its accessibility features, I&apos;m committed to making it usable for people of all abilities.</p>
 							<p>If you encounter barriers while using Midnight Thought, please reach out on Discord. Your feedback helps me understand what needs to be fixed or improved.</p>
 						</CardContent>
 					</Card>
@@ -52,7 +52,7 @@ export default function AccessibilityPage() {
 						</CardHeader>
 						<CardContent className="text-muted-foreground space-y-4">
 							<p>
-								<strong>What's currently implemented:</strong>
+								<strong>What&apos;s currently implemented:</strong>
 							</p>
 							<ul className="list-disc list-inside space-y-2 ml-4">
 								<li>Semantic HTML structure for screen readers</li>
@@ -71,7 +71,7 @@ export default function AccessibilityPage() {
 						<CardHeader>
 							<CardTitle className="flex items-center gap-2">
 								<Keyboard className="h-5 w-5 text-primary" />
-								What I'm Working On
+								What I&apos;m Working On
 							</CardTitle>
 						</CardHeader>
 						<CardContent className="text-muted-foreground space-y-4">
@@ -99,7 +99,7 @@ export default function AccessibilityPage() {
 							</CardTitle>
 						</CardHeader>
 						<CardContent className="text-muted-foreground space-y-4">
-							<p>I aim to meet Web Content Accessibility Guidelines (WCAG) 2.1 Level AA standards, though with help from tech friends, we're still working toward full compliance.</p>
+							<p>I aim to meet Web Content Accessibility Guidelines (WCAG) 2.1 Level AA standards, though with help from tech friends, we&apos;re still working toward full compliance.</p>
 							<p>The platform is tested with:</p>
 							<ul className="list-disc list-inside space-y-2 ml-4">
 								<li>Keyboard-only navigation</li>
@@ -122,13 +122,13 @@ export default function AccessibilityPage() {
 							<p>
 								<strong>Need help or found an accessibility issue?</strong>
 							</p>
-							<p>Please join our Discord server and post in the #support channel. I'm always eager to learn about accessibility barriers and fix them quickly.</p>
+							<p>Please join our Discord server and post in the #support channel. I&apos;m always eager to learn about accessibility barriers and fix them quickly.</p>
 							<p>
 								<strong>When reporting accessibility issues, please include:</strong>
 							</p>
 							<ul className="list-disc list-inside space-y-2 ml-4">
-								<li>What assistive technology you're using (if any)</li>
-								<li>What browser you're using</li>
+								<li>What assistive technology you&apos;re using (if any)</li>
+								<li>What browser you&apos;re using</li>
 								<li>What you were trying to do</li>
 								<li>What happened instead</li>
 								<li>Any error messages you saw</li>

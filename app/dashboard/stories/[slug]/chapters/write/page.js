@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
@@ -47,13 +47,7 @@ export default function WriteChapter({ params }) {
     }
   }, [status, router])
 
-  useEffect(() => {
-    if (slug && session) {
-      loadStoryData()
-    }
-  }, [slug, session])
-
-  const loadStoryData = async () => {
+  const loadStoryData = useCallback(async () => {
     try {
       setLoading(true)
       const response = await fetch(`/api/stories/${slug}`)
@@ -80,7 +74,13 @@ export default function WriteChapter({ params }) {
       setError('Failed to load story')
       setLoading(false)
     }
-  }
+  }, [slug, session])
+
+  useEffect(() => {
+    if (slug && session) {
+      loadStoryData()
+    }
+  }, [slug, session, loadStoryData])
 
   const handleSave = async ({ title, content, isDraft = false }) => {
     try {
@@ -214,7 +214,7 @@ export default function WriteChapter({ params }) {
 
           <h1 className="text-3xl font-bold text-foreground mb-2">Write New Chapter</h1>
           <p className="text-muted-foreground">
-            Adding a new chapter to "{story?.title}"
+            Adding a new chapter to &quot;{story?.title}&quot;
           </p>
         </div>
 
@@ -297,7 +297,7 @@ export default function WriteChapter({ params }) {
                 )}
 
                 <div className="space-y-2">
-                  <Label htmlFor="notes">Author's Notes</Label>
+                  <Label htmlFor="notes">Author&apos;s Notes</Label>
                   <Textarea
                     id="notes"
                     placeholder="Optional notes for readers..."
