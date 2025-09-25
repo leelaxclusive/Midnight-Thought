@@ -71,9 +71,15 @@ export default function ContactPage() {
 								<div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
 									<p className="text-sm font-semibold text-green-800 dark:text-green-200 mb-2">🚀 Open Source Project</p>
 									<p className="text-xs text-green-700 dark:text-green-300">
-										Midnight Thought is open source! Developers and designers who want to contribute to improving the platform are welcome. Check out our code on{' '}
-										<a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener noreferrer" className="underline font-medium">GitHub</a> or join our{' '}
-										<a href="https://discord.gg/unDsDGHz92" target="_blank" rel="noopener noreferrer" className="underline font-medium">Discord</a> to connect with the dev team and learn how to get involved in making this storytelling platform even better.
+										Midnight Thought is open source! Developers and designers who want to contribute to improving the platform are welcome. Check out our code on{" "}
+										<a href="https://github.com/leelaxclusive/Midnight-Thought" target="_blank" rel="noopener noreferrer" className="underline font-medium">
+											GitHub
+										</a>{" "}
+										or join our{" "}
+										<a href="https://discord.gg/unDsDGHz92" target="_blank" rel="noopener noreferrer" className="underline font-medium">
+											Discord
+										</a>{" "}
+										to connect with the dev team and learn how to get involved in making this storytelling platform even better.
 									</p>
 								</div>
 							</div>

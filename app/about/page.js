@@ -111,9 +111,15 @@ export default function AboutPage() {
 									<li>Spread the word to other storytellers</li>
 								</ul>
 								<p className="pt-4 border-t border-border">
-									<strong>Open Source Project:</strong> Midnight Thought is an open source project! If you&apos;re a developer or designer who wants to help improve and update the platform, we&apos;d love your contributions. Check out our code on{' '}
-									<a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">GitHub</a> or join our{' '}
-									<a href="https://discord.gg/unDsDGHz92" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Discord</a> to connect with the development team and learn how you can get involved.
+									<strong>Open Source Project:</strong> Midnight Thought is an open source project! If you&apos;re a developer or designer who wants to help improve and update the platform, we&apos;d love your contributions. Check out our code on{" "}
+									<a href="https://github.com/leelaxclusive/Midnight-Thought" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+										GitHub
+									</a>{" "}
+									or join our{" "}
+									<a href="https://discord.gg/unDsDGHz92" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+										Discord
+									</a>{" "}
+									to connect with the development team and learn how you can get involved.
 								</p>
 							</div>
 
