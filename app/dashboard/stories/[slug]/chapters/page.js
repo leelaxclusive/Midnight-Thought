@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { RichTextEditor, stripHtml, getWordCount } from "@/components/ui/rich-text-editor";
+import { BulkChapterUpload } from "@/components/ui/bulk-chapter-upload";
 import Navbar from "@/components/navigation/Navbar";
 import Link from "next/link";
 import { BookOpen, Edit3, Eye, Trash2, Plus, ArrowLeft, Calendar, Clock, FileText, Settings, Save, Upload } from "lucide-react";
@@ -27,6 +28,7 @@ export default function ChapterManagement({ params }) {
 	const [selectedChapter, setSelectedChapter] = useState(null);
 	const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 	const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+	const [isBulkUploadDialogOpen, setIsBulkUploadDialogOpen] = useState(false);
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 	const [chapterToDelete, setChapterToDelete] = useState(null);
 
@@ -298,6 +300,10 @@ export default function ChapterManagement({ params }) {
 								View Story
 							</Link>
 						</Button>
+						<Button variant="outline" onClick={() => setIsBulkUploadDialogOpen(true)}>
+							<Upload className="h-4 w-4 mr-2" />
+							Bulk Upload
+						</Button>
 						<Button onClick={openCreateDialog}>
 							<Plus className="h-4 w-4 mr-2" />
 							New Chapter
@@ -527,6 +533,14 @@ export default function ChapterManagement({ params }) {
 						</AlertDialogFooter>
 					</AlertDialogContent>
 				</AlertDialog>
+
+				{/* Bulk Chapter Upload Dialog */}
+				<BulkChapterUpload
+					isOpen={isBulkUploadDialogOpen}
+					onClose={() => setIsBulkUploadDialogOpen(false)}
+					onSuccess={loadStoryAndChapters}
+					storySlug={resolvedParams.slug}
+				/>
 			</div>
 		</div>
 	);
