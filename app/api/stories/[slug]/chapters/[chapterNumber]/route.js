@@ -38,7 +38,6 @@ export async function GET(request, { params }) {
 		}
 
 		const session = await getServerSession();
-		console.log(session.user.email, story.author.email);
 		// Check if user has access to this chapter
 		if (chapter.status !== "published") {
 			if (!session || session.user.email !== story.author.email) {
