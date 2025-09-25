@@ -61,7 +61,7 @@ export async function POST(request, { params }) {
 		const resolvedParams = await params;
 
 		const body = await request.json();
-		const { title, content, status, notes, scheduledDate } = body;
+		const { title, content, status, notes, scheduledPublishDate } = body;
 
 		// Validate required fields (removed chapterNumber)
 		if (!title || !content) {
@@ -107,7 +107,7 @@ export async function POST(request, { params }) {
 			chapterNumber,
 			status: status || "draft",
 			notes: sanitizedNotes,
-			scheduledPublishDate: scheduledDate ? new Date(scheduledDate) : null,
+			scheduledPublishDate: scheduledPublishDate ? new Date(scheduledPublishDate) : null,
 		});
 
 		// Add chapter to story's chapters array
