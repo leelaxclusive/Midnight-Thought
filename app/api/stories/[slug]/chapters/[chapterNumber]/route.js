@@ -13,11 +13,10 @@ export async function GET(request, { params }) {
 		const { slug, chapterNumber } = await params;
 
 		// Find the story
-		const story = await Story.findOne({ slug }).populate("author", "name username avatar bio followers");
+		const story = await Story.findOne({ slug }).populate("author");
 		if (!story) {
 			return NextResponse.json({ error: "Story not found" }, { status: 404 });
 		}
-		console.log(slug, chapterNumber);
 
 		// Find the chapter
 		const chapter = await Chapter.findOne({
@@ -39,7 +38,7 @@ export async function GET(request, { params }) {
 		}
 
 		const session = await getServerSession();
-
+		console.log(session.user.email, story.author.email);
 		// Check if user has access to this chapter
 		if (chapter.status !== "published") {
 			if (!session || session.user.email !== story.author.email) {
@@ -96,7 +95,7 @@ export async function PUT(request, { params }) {
 		const { slug, chapterNumber } = await params;
 
 		const body = await request.json();
-		const { title, content, status, notes, scheduledDate } = body;
+		const { title, content, status, notes, scheduledPublishDate } = body;
 
 		// Find the story
 		const story = await Story.findOne({ slug });
@@ -131,7 +130,7 @@ export async function PUT(request, { params }) {
 		if (content) updateData.content = sanitizeForStorage(content, "editor");
 		if (status) updateData.status = status;
 		if (notes !== undefined) updateData.notes = sanitizeForStorage(notes, "comments");
-		if (scheduledDate) updateData.scheduledDate = new Date(scheduledDate);
+		if (scheduledPublishDate) updateData.scheduledPublishDate = new Date(scheduledPublishDate);
 
 		const updatedChapter = await Chapter.findByIdAndUpdate(chapter._id, updateData, { new: true, runValidators: true });
 

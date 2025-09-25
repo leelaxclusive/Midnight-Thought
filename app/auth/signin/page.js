@@ -139,7 +139,7 @@ function SignInContent() {
 								Continue with Google
 							</Button>
 
-							<Button variant="outline" className="w-full" onClick={() => handleSocialSignIn("facebook")} disabled={socialLoading === "facebook"}>
+							{/* <Button variant="outline" className="w-full" onClick={() => handleSocialSignIn("facebook")} disabled={socialLoading === "facebook"}>
 								{socialLoading === "facebook" ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Facebook className="h-4 w-4 mr-2" />}
 								Continue with Facebook
 							</Button>
@@ -147,7 +147,7 @@ function SignInContent() {
 							<Button variant="outline" className="w-full" onClick={() => handleSocialSignIn("reddit")} disabled={socialLoading === "reddit"}>
 								{socialLoading === "reddit" ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <MessageCircle className="h-4 w-4 mr-2" />}
 								Continue with Reddit
-							</Button>
+							</Button> */}
 						</div>
 
 						<div className="relative">
@@ -221,11 +221,13 @@ function SignInContent() {
 
 export default function SignInPage() {
 	return (
-		<Suspense fallback={
-			<div className="min-h-screen bg-background flex items-center justify-center">
-				<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-			</div>
-		}>
+		<Suspense
+			fallback={
+				<div className="min-h-screen bg-background flex items-center justify-center">
+					<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+				</div>
+			}
+		>
 			<SignInContent />
 		</Suspense>
 	);

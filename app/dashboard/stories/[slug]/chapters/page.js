@@ -35,7 +35,7 @@ export default function ChapterManagement({ params }) {
 		content: "",
 		status: "scheduled",
 		notes: "",
-		scheduledDate: new Date().toISOString().slice(0, 16),
+		scheduledPublishDate: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16),
 	});
 
 	useEffect(() => {
@@ -80,7 +80,7 @@ export default function ChapterManagement({ params }) {
 			content: "",
 			status: "scheduled",
 			notes: "",
-			scheduledDate: new Date().toISOString().slice(0, 16),
+			scheduledPublishDate: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16),
 		});
 		setSelectedChapter(null);
 		setIsCreateDialogOpen(true);
@@ -95,12 +95,14 @@ export default function ChapterManagement({ params }) {
 				const fullChapter = data.chapter;
 
 				setSelectedChapter(fullChapter);
+				console.log(fullChapter.scheduledPublishDate);
+
 				setChapterForm({
 					title: fullChapter.title,
 					content: fullChapter.content,
 					status: fullChapter.status,
 					notes: fullChapter.notes || "",
-					scheduledDate: fullChapter.scheduledDate ? new Date(fullChapter.scheduledDate).toISOString().slice(0, 16) : "",
+					scheduledPublishDate: fullChapter.scheduledPublishDate ? new Date(new Date(fullChapter.scheduledPublishDate).getTime() - new Date(fullChapter.scheduledPublishDate).getTimezoneOffset() * 60000).toISOString().slice(0, 16) : "",
 				});
 				setIsEditDialogOpen(true);
 			}
@@ -119,7 +121,7 @@ export default function ChapterManagement({ params }) {
 				body: JSON.stringify({
 					...chapterForm,
 					content: chapterForm.content, // Keep HTML formatting for rich text display
-					scheduledDate: chapterForm.scheduledDate ? new Date(chapterForm.scheduledDate) : null,
+					scheduledPublishDate: chapterForm.scheduledPublishDate ? new Date(chapterForm.scheduledPublishDate) : null,
 				}),
 			});
 
@@ -149,7 +151,7 @@ export default function ChapterManagement({ params }) {
 				body: JSON.stringify({
 					...chapterForm,
 					content: chapterForm.content, // Keep HTML formatting for rich text display
-					scheduledDate: chapterForm.scheduledDate ? new Date(chapterForm.scheduledDate) : null,
+					scheduledPublishDate: chapterForm.scheduledPublishDate ? new Date(chapterForm.scheduledPublishDate) : null,
 				}),
 			});
 
@@ -195,11 +197,9 @@ export default function ChapterManagement({ params }) {
 			content: "",
 			status: "scheduled",
 			notes: "",
-			scheduledDate: new Date().toISOString().slice(0, 16),
+			scheduledPublishDate: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16),
 		});
 	};
-
-	console.log(chapterForm);
 
 	const getStatusColor = (status) => {
 		switch (status) {
@@ -349,11 +349,21 @@ export default function ChapterManagement({ params }) {
 												<h3 className="font-medium">
 													Chapter {chapter.chapterNumber}: {chapter.title}
 												</h3>
+											</div>
+
+											<div className="flex items-center gap-2 mb-2">
 												<Badge className={getStatusColor(chapter.status)}>{chapter.status}</Badge>
-												{chapter.scheduledDate && chapter.status === "scheduled" && (
+												{chapter.scheduledPublishDate && chapter.status === "scheduled" && (
 													<Badge variant="outline">
 														<Calendar className="h-3 w-3 mr-1" />
-														{new Date(chapter.scheduledDate).toLocaleDateString()}
+														{new Date(chapter.scheduledPublishDate).toLocaleDateString()} - {new Date(chapter.scheduledPublishDate).toLocaleTimeString()}
+													</Badge>
+												)}
+
+												{chapter.createdAt && chapter.status === "published" && (
+													<Badge variant="outline">
+														<Calendar className="h-3 w-3 mr-1" />
+														{new Date(chapter.createdAt).toLocaleDateString()} - {new Date(chapter.createdAt).toLocaleTimeString()}
 													</Badge>
 												)}
 											</div>
@@ -372,7 +382,6 @@ export default function ChapterManagement({ params }) {
 													{chapter.views || 0} views
 												</div>
 												<div className="flex items-center">💝 {chapter.likesCount || 0} likes</div>
-												<div className="flex items-center">Updated {getTimeAgo(chapter.updatedAt || chapter.createdAt)}</div>
 											</div>
 
 											{chapter.notes && (
@@ -470,7 +479,7 @@ export default function ChapterManagement({ params }) {
 								{chapterForm.status === "scheduled" && (
 									<div className="space-y-2">
 										<Label htmlFor="scheduled-date">Scheduled Date</Label>
-										<Input id="scheduled-date" type="datetime-local" value={chapterForm.scheduledDate} onChange={(e) => setChapterForm({ ...chapterForm, scheduledDate: e.target.value })} />
+										<Input id="scheduled-date" type="datetime-local" value={chapterForm.scheduledPublishDate} onChange={(e) => setChapterForm({ ...chapterForm, scheduledPublishDate: e.target.value })} />
 									</div>
 								)}
 							</div>

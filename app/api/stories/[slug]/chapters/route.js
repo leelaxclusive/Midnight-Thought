@@ -13,7 +13,7 @@ export async function GET(request, { params }) {
 		const resolvedParams = await params;
 
 		// Find the story
-		const story = await Story.findOne({ slug: resolvedParams.slug });
+		const story = await Story.findOne({ slug: resolvedParams.slug }).populate("author");
 		if (!story) {
 			return NextResponse.json({ error: "Story not found" }, { status: 404 });
 		}
@@ -28,12 +28,12 @@ export async function GET(request, { params }) {
 				{ status: "published" },
 				{
 					status: "scheduled",
-					scheduledPublishDate: { $lte: now }
-				}
+					scheduledPublishDate: { $lte: now },
+				},
 			];
 		}
 
-		const chapters = await Chapter.find(query).select("title chapterNumber status createdAt updatedAt wordCount readingTime likes comments notes").sort({ chapterNumber: 1 }).lean();
+		const chapters = await Chapter.find(query).select("title chapterNumber status scheduledPublishDate createdAt updatedAt wordCount readingTime likes comments notes").sort({ chapterNumber: 1 }).lean();
 
 		const chaptersWithStats = chapters.map((chapter) => ({
 			...chapter,
@@ -87,8 +87,10 @@ export async function POST(request, { params }) {
 
 		// Auto-generate chapter number based on existing chapters
 		const lastChapter = await Chapter.findOne({
-			story: story._id
-		}).sort({ chapterNumber: -1 }).select('chapterNumber');
+			story: story._id,
+		})
+			.sort({ chapterNumber: -1 })
+			.select("chapterNumber");
 
 		const chapterNumber = (lastChapter?.chapterNumber || 0) + 1;
 

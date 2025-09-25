@@ -121,15 +121,15 @@ export default function ChapterDetails({ params }) {
 			});
 
 			// Add to currently reading
-			await fetch('/api/user/currently-reading', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
+			await fetch("/api/user/currently-reading", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					storySlug: slug,
 					chapterNumber: parseInt(chapterNumber),
 					scrollPosition: 0,
-					timeSpent: 0
-				})
+					timeSpent: 0,
+				}),
 			});
 
 			if (response.ok) {
@@ -141,38 +141,41 @@ export default function ChapterDetails({ params }) {
 		}
 	}, [session, chapter, slug, chapterNumber]);
 
-	const updateReadingSession = useCallback(async (timeSpent, scrollProgress, completed = false) => {
-		if (!readingSession || !session) return;
+	const updateReadingSession = useCallback(
+		async (timeSpent, scrollProgress, completed = false) => {
+			if (!readingSession || !session) return;
 
-		try {
-			// Update analytics
-			await fetch(`/api/stories/${slug}/chapters/${chapterNumber}/analytics`, {
-				method: "PUT",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					action: "update",
-					sessionId: readingSession,
-					timeSpent,
-					scrollProgress: Math.round(scrollProgress),
-					completed,
-				}),
-			});
+			try {
+				// Update analytics
+				await fetch(`/api/stories/${slug}/chapters/${chapterNumber}/analytics`, {
+					method: "PUT",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						action: "update",
+						sessionId: readingSession,
+						timeSpent,
+						scrollProgress: Math.round(scrollProgress),
+						completed,
+					}),
+				});
 
-			// Update reading progress
-			await fetch('/api/user/currently-reading', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					storySlug: slug,
-					chapterNumber: parseInt(chapterNumber),
-					scrollPosition: Math.round(scrollProgress),
-					timeSpent
-				})
-			});
-		} catch (error) {
-			console.error("Error updating reading session:", error);
-		}
-	}, [readingSession, session, slug, chapterNumber]);
+				// Update reading progress
+				await fetch("/api/user/currently-reading", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						storySlug: slug,
+						chapterNumber: parseInt(chapterNumber),
+						scrollPosition: Math.round(scrollProgress),
+						timeSpent,
+					}),
+				});
+			} catch (error) {
+				console.error("Error updating reading session:", error);
+			}
+		},
+		[readingSession, session, slug, chapterNumber]
+	);
 
 	useEffect(() => {
 		if (slug && chapterNumber) {
@@ -240,7 +243,6 @@ export default function ChapterDetails({ params }) {
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
-
 
 	const handleLike = async () => {
 		try {
@@ -398,8 +400,6 @@ export default function ChapterDetails({ params }) {
 											<Clock className="h-3 w-3 mr-1" />
 											{chapter.readingTime} min read
 										</div>
-										<span>•</span>
-										<span>{getTimeAgo(chapter.publishedAt)}</span>
 									</div>
 								</div>
 
@@ -479,28 +479,10 @@ export default function ChapterDetails({ params }) {
 
 					{/* Sidebar */}
 					<div className="lg:col-span-1">
-						<div className="sticky top-24 space-y-6 max-h-[calc(100vh-4rem)] overflow-y-auto">
-							{/* Reading Progress */}
-							<Card>
-								<CardContent className="p-4">
-									<div className="space-y-3">
-										<div className="flex items-center justify-between text-sm">
-											<span>Reading Progress</span>
-											<span>{Math.round(readingProgress)}%</span>
-										</div>
-										<div className="w-full bg-muted rounded-full h-2">
-											<div className="bg-primary h-2 rounded-full transition-all duration-150" style={{ width: `${readingProgress}%` }} />
-										</div>
-										<div className="text-xs text-muted-foreground">
-											Reading time: {Math.floor(totalReadingTime / 60)}:{String(totalReadingTime % 60).padStart(2, "0")}
-										</div>
-									</div>
-								</CardContent>
-							</Card>
-
+						<div className="sticky top-20 space-y-6 max-h-[calc(100vh-5rem)]">
 							{/* Story Info */}
 							<Card>
-								<CardContent className="p-4">
+								<CardContent className="p-3">
 									<div className="space-y-3">
 										<h3 className="font-medium">{story.title}</h3>
 										<p className="text-sm text-muted-foreground">by {story.author.name}</p>
@@ -517,6 +499,24 @@ export default function ChapterDetails({ params }) {
 
 							{/* Table of Contents */}
 							<ChapterTableOfContents story={story} chapters={chapters} currentChapter={chapter} />
+
+							{/* Reading Progress */}
+							<Card>
+								<CardContent className="p-3">
+									<div className="space-y-3">
+										<div className="flex items-center justify-between text-sm">
+											<span>Reading Progress</span>
+											<span>{Math.round(readingProgress)}%</span>
+										</div>
+										<div className="w-full bg-muted rounded-full h-2">
+											<div className="bg-primary h-2 rounded-full transition-all duration-150" style={{ width: `${readingProgress}%` }} />
+										</div>
+										<div className="text-xs text-muted-foreground">
+											Reading time: {Math.floor(totalReadingTime / 60)}:{String(totalReadingTime % 60).padStart(2, "0")}
+										</div>
+									</div>
+								</CardContent>
+							</Card>
 						</div>
 					</div>
 				</div>

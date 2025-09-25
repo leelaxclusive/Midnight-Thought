@@ -106,7 +106,7 @@ export default function SignUp() {
 							Continue with Google
 						</Button>
 
-						<Button variant="outline" size="lg" className="w-full relative" onClick={() => handleSocialSignIn("facebook")} disabled={socialLoading !== null}>
+						{/* <Button variant="outline" size="lg" className="w-full relative" onClick={() => handleSocialSignIn("facebook")} disabled={socialLoading !== null}>
 							{socialLoading === "facebook" ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Facebook className="mr-2 h-4 w-4" />}
 							Continue with Facebook
 						</Button>
@@ -114,7 +114,7 @@ export default function SignUp() {
 						<Button variant="outline" size="lg" className="w-full relative" onClick={() => handleSocialSignIn("reddit")} disabled={socialLoading !== null}>
 							{socialLoading === "reddit" ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <MessageCircle className="mr-2 h-4 w-4" />}
 							Continue with Reddit
-						</Button>
+						</Button> */}
 					</div>
 
 					<div className="relative mb-6">

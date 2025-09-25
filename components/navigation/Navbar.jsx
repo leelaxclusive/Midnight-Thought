@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { PenTool, Search, User, Settings, LogOut, Menu, X, Home, Library } from "lucide-react";
+import { PenTool, Search, User, Settings, LogOut, Menu, X, Home, Library, Heart } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 import Image from "next/image";
@@ -23,6 +23,7 @@ export default function Navbar() {
 		{ name: "Explore", href: "/explore", icon: Search },
 		{ name: "Write", href: "/write", icon: PenTool, authRequired: true },
 		{ name: "Library", href: "/library", icon: Library, authRequired: true },
+		{ name: "Support", href: "/support", icon: Heart },
 	];
 
 	return (

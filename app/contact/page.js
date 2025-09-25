@@ -36,7 +36,13 @@ export default function ContactPage() {
 								<ol className="text-left space-y-2 text-muted-foreground">
 									<li>1. Click the Discord link below to join our server</li>
 									<li>
-										2. Go to the <code className="bg-muted px-2 py-1 rounded text-sm">#support</code> channel
+										2. Go to the{" "}
+										<code className="bg-muted px-2 py-1 rounded text-sm">
+											<a href="https://discord.com/channels/1345663860010520620/1420366414245662801" target="_blank">
+												#website-service
+											</a>
+										</code>
+										channel
 									</li>
 									<li>3. Post your question, bug report, or feature request</li>
 									<li>4. Leela will respond as soon as possible!</li>
@@ -44,7 +50,7 @@ export default function ContactPage() {
 							</div>
 
 							<Button size="lg" className="w-full" asChild>
-								<a href="https://discord.gg/your-discord-invite" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+								<a href="https://discord.gg/unDsDGHz92" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
 									<ExternalLink className="h-5 w-5" />
 									Join Discord Server
 								</a>
@@ -59,8 +65,17 @@ export default function ContactPage() {
 								</p>
 							</div>
 
-							<div className="pt-6 border-t">
+							<div className="pt-6 border-t space-y-3">
 								<p className="text-sm text-muted-foreground">Midnight Thought is built with ❤️ by Leela with help from amazing tech friends. Your feedback and support mean everything to this part-time erotic romance writer!</p>
+
+								<div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
+									<p className="text-sm font-semibold text-green-800 dark:text-green-200 mb-2">🚀 Open Source Project</p>
+									<p className="text-xs text-green-700 dark:text-green-300">
+										Midnight Thought is open source! Developers and designers who want to contribute to improving the platform are welcome. Check out our code on{' '}
+										<a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener noreferrer" className="underline font-medium">GitHub</a> or join our{' '}
+										<a href="https://discord.gg/unDsDGHz92" target="_blank" rel="noopener noreferrer" className="underline font-medium">Discord</a> to connect with the dev team and learn how to get involved in making this storytelling platform even better.
+									</p>
+								</div>
 							</div>
 						</CardContent>
 					</Card>
