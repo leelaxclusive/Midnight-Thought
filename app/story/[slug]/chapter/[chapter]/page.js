@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { createSanitizedHtml } from "@/lib/sanitize";
+import { markdownToHtml } from "@/components/ui/markdown-editor";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -454,7 +455,7 @@ export default function ChapterDetails({ params }) {
 										maxWidth: `${readerSettings.maxWidth}px`,
 										margin: "0 auto",
 									}}
-									dangerouslySetInnerHTML={createSanitizedHtml(chapter.content, "display")}
+									dangerouslySetInnerHTML={{ __html: markdownToHtml(chapter.content) }}
 								/>
 							</CardContent>
 						</Card>

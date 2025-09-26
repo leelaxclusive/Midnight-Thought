@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./car
 import { Input } from "./input";
 import { Label } from "./label";
 import { Textarea } from "./textarea";
+import { MarkdownEditor } from "./markdown-editor";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./dialog";
 import { Badge } from "./badge";
@@ -131,14 +132,14 @@ export function BulkChapterUpload({ isOpen, onClose, onSuccess, storySlug }) {
 		const template = [
 			{
 				title: "Chapter 1: The Beginning",
-				content: "This is the content of your first chapter...",
+				content: "# Chapter 1: The Beginning\n\nIt was a **dark and stormy night** when our story begins...\n\n## The Awakening\n\nThe protagonist *slowly* opened their eyes to find:\n\n- A mysterious letter\n- An ancient key\n- A sense of destiny\n\n> \"Sometimes the greatest adventures begin with the smallest steps.\"",
 				status: "draft",
 				notes: "Optional notes about this chapter",
 				scheduledPublishDate: "2024-12-25T10:00",
 			},
 			{
 				title: "Chapter 2: The Journey",
-				content: "This is the content of your second chapter...",
+				content: "# Chapter 2: The Journey\n\nThe next morning brought new challenges...\n\n## Preparation\n\nOur hero needed to gather:\n\n1. Supplies for the journey\n2. Information about the destination\n3. Courage to face the unknown\n\n```\n// A mysterious code was found\nlet secret = \"The answer lies within\";\n```\n\n![A map](https://example.com/map.jpg)\n\nWith everything ready, the journey could finally begin.",
 				status: "scheduled",
 				notes: "",
 				scheduledPublishDate: "2024-12-26T10:00",
@@ -154,7 +155,7 @@ export function BulkChapterUpload({ isOpen, onClose, onSuccess, storySlug }) {
 			a.click();
 			URL.revokeObjectURL(url);
 		} else if (activeTab === "csv") {
-			const csvContent = ["title,content,status,notes,scheduledPublishDate", '"Chapter 1: The Beginning","This is the content of your first chapter...","draft","Optional notes about this chapter","2024-12-25T10:00"', '"Chapter 2: The Journey","This is the content of your second chapter...","scheduled","","2024-12-26T10:00"'].join("\n");
+			const csvContent = ["title,content,status,notes,scheduledPublishDate", '"Chapter 1: The Beginning","# Chapter 1\n\nIt was a **dark and stormy night**...","draft","Optional notes","2024-12-25T10:00"', '"Chapter 2: The Journey","# Chapter 2\n\nThe next morning brought *new challenges*...","scheduled","","2024-12-26T10:00"'].join("\n");
 
 			const blob = new Blob([csvContent], { type: "text/csv" });
 			const url = URL.createObjectURL(blob);
@@ -281,7 +282,12 @@ export function BulkChapterUpload({ isOpen, onClose, onSuccess, storySlug }) {
 
 										<div>
 											<Label>Content *</Label>
-											<Textarea value={chapter.content} onChange={(e) => updateChapter(index, "content", e.target.value)} placeholder="Chapter content" rows={4} />
+											<MarkdownEditor
+												value={chapter.content}
+												onChange={(content) => updateChapter(index, "content", content)}
+												placeholder="Write chapter content in markdown..."
+												minHeight="200px"
+											/>
 										</div>
 
 										<div className="grid grid-cols-2 gap-3">

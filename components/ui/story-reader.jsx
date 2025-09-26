@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { useTheme } from '@/lib/theme-context'
+import { markdownToHtml } from './markdown-editor'
 import { ThemeToggle, ReadingModeToggle } from './theme-toggle'
 import { Button } from './button'
 import { Card, CardContent } from './card'
@@ -341,7 +342,7 @@ export function StoryReader({ story, chapter, content, nextChapter, prevChapter,
               }}
             >
               <div
-                dangerouslySetInnerHTML={{ __html: content }}
+                dangerouslySetInnerHTML={{ __html: markdownToHtml(content) }}
                 className="prose dark:prose-invert max-w-none"
               />
             </div>
