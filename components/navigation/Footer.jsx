@@ -1,6 +1,10 @@
+'use client'
 import Link from "next/link";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+
 export default function Footer() {
+	const { data: session } = useSession();
 	const currentYear = new Date().getFullYear();
 
 	const footerLinks = [
@@ -13,6 +17,11 @@ export default function Footer() {
 		{ name: "Support", href: "/support" },
 	];
 
+	// Add markdown editor link only for authenticated users
+	const allLinks = session
+		? [...footerLinks, { name: "Markdown Editor", href: "/markdown-editor" }]
+		: footerLinks;
+
 	return (
 		<footer className="bg-background border-t py-8">
 			<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,7 +33,7 @@ export default function Footer() {
 
 					{/* Links */}
 					<div className="flex flex-wrap justify-center gap-6">
-						{footerLinks.map((link, index) => (
+						{allLinks.map((link, index) => (
 							<Link key={index} href={link.href} className="text-muted-foreground hover:text-primary transition-colors text-sm">
 								{link.name}
 							</Link>
