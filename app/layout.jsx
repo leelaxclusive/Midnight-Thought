@@ -4,6 +4,8 @@ import SessionProvider from "@/components/providers/SessionProvider";
 import { ThemeProvider } from "@/lib/theme-context";
 import AutoPublisher from "@/components/AutoPublisher";
 import { Suspense } from "react";
+import { GoogleAnalytics } from "@next/third-parties/google";
+
 const inter = Inter({
 	subsets: ["latin"],
 	variable: "--font-inter",
@@ -22,6 +24,7 @@ export default function RootLayout({ children }) {
 					<SessionProvider>
 						<AutoPublisher />
 						<Suspense>{children}</Suspense>
+						<GoogleAnalytics gaId="G-KZP1YW67EH" />
 					</SessionProvider>
 				</ThemeProvider>
 			</body>
